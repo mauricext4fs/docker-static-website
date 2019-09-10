@@ -1,0 +1,21 @@
+version: '2'
+services:
+
+  web:
+        image: nginx:alpine
+        volumes:
+          - ./etc/nginx/options.include:/etc/nginx/options.include:cached
+          - ./etc/nginx/site.conf:/etc/nginx/conf.d/default.conf:cached
+          - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:cached
+          - ./public_html:/var/www/html:cached
+        networks:
+          www-gateway:
+            aliases:
+              - web
+        ports:
+            - 8081:80
+            - 4013:443
+
+networks:
+  www-gateway:
+    external: true
